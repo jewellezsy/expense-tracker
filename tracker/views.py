@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, redirect
 from .models import Expense
 from .forms import ExpenseForm
 
@@ -15,3 +16,8 @@ def add_expense(request):
     else:
         form = ExpenseForm()
     return render(request, 'tracker/add_expense.html', {'form': form})
+
+def delete_expense(request, pk):
+    expense = get_object_or_404(Expense, pk=pk)
+    expense.delete()
+    return redirect('expense_list')
